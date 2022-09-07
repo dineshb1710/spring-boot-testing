@@ -1,0 +1,6 @@
+
+spring:
+  application:
+    name: SPRING-TESTING-APPLICATION
+  jpa:
+    show-sql: true
