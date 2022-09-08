@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -127,5 +128,24 @@ public class EmployeeRepositoryTests {
         assertThat(updatedEmployee).isNotNull();
         assertThat(updatedEmployee.getFirstName()).isEqualTo("Jani");
         assertThat(updatedEmployee.getLastName()).isEqualTo("Buaj");
+    }
+
+    @Test
+    public void givenEmployee_whenDeleted_thenReturnNull() {
+
+        // Given -  A precondition (or) setup.
+        Employee employee = Employee.builder()
+                .firstName("Janvi")
+                .lastName("Bhardwaj")
+                .email("janvi.bhardwaj@gmail.com")
+                .build();
+        employeeRepository.save(employee);
+
+        // When -  A behaviour or action that we are trying to perform.
+        employeeRepository.deleteById(employee.getId());
+
+        // Then - Verify the output of the operation performed.
+        Optional<Employee> returnedEmployee = employeeRepository.findById(employee.getId());
+        assertThat(returnedEmployee.isPresent()).isFalse();
     }
 }
