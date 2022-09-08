@@ -84,4 +84,23 @@ public class EmployeeRepositoryTests {
         assertThat(returnedEmployee).isNotNull();
     }
 
+
+    @Test
+    @DisplayName("Find employee by email")
+    public void givenEmployee_whenFindByEmail_thenReturnEmployeeMatchingEmail() {
+
+        // Given -  A precondition (or) setup.
+        Employee employee = Employee.builder()
+                .firstName("Janvi")
+                .lastName("Bhardwaj")
+                .email("janvi.bhardwaj@gmail.com")
+                .build();
+        employeeRepository.save(employee);
+
+        // When -  A behaviour or action that we are trying to perform.
+        Employee returnedEmployee = employeeRepository.findByEmail(employee.getEmail()).get();
+
+        // Then - Verify the output of the operation performed.
+        assertThat(returnedEmployee).isNotNull();
+    }
 }
