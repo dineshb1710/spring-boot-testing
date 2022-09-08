@@ -103,4 +103,29 @@ public class EmployeeRepositoryTests {
         // Then - Verify the output of the operation performed.
         assertThat(returnedEmployee).isNotNull();
     }
+
+
+    @Test
+    @DisplayName("Update Employee")
+    public void givenEmployee_whenUpdateEmployee_thenReturnUpdatedEmployee() {
+
+        // Given -  A precondition (or) setup.
+        Employee employee = Employee.builder()
+                .firstName("Janvi")
+                .lastName("Bhardwaj")
+                .email("janvi.bhardwaj@gmail.com")
+                .build();
+        employeeRepository.save(employee);
+
+        // When -  A behaviour or action that we are trying to perform.
+        Employee savedEmployee = employeeRepository.findById(employee.getId()).get();
+        savedEmployee.setFirstName("Jani");
+        savedEmployee.setLastName("Buaj");
+        Employee updatedEmployee = employeeRepository.save(savedEmployee);
+
+        // Then - Verify the output of the operation performed.
+        assertThat(updatedEmployee).isNotNull();
+        assertThat(updatedEmployee.getFirstName()).isEqualTo("Jani");
+        assertThat(updatedEmployee.getLastName()).isEqualTo("Buaj");
+    }
 }
