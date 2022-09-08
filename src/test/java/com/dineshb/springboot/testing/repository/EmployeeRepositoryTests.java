@@ -148,4 +148,24 @@ public class EmployeeRepositoryTests {
         Optional<Employee> returnedEmployee = employeeRepository.findById(employee.getId());
         assertThat(returnedEmployee.isPresent()).isFalse();
     }
+
+
+    @Test
+    @DisplayName("Find by JPQL - FirstName & LastName")
+    public void givenFirstNameAndLastName_whenFindByJPQL_thenReturnEmployeeObject() {
+
+        // Given -  A precondition (or) setup.
+        Employee employee = Employee.builder()
+                .firstName("Janvi")
+                .lastName("Bhardwaj")
+                .email("janvi.bhardwaj@gmail.com")
+                .build();
+        employeeRepository.save(employee);
+
+        // When -  A behaviour or action that we are trying to perform.
+        Employee savedEmployee = employeeRepository.findByJPQL(employee.getFirstName(), employee.getLastName());
+
+        // Then - Verify the output of the operation performed.
+        assertThat(savedEmployee).isNotNull();
+    }
 }
