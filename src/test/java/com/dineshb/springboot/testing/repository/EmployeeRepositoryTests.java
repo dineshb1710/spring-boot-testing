@@ -131,6 +131,7 @@ public class EmployeeRepositoryTests {
     }
 
     @Test
+    @DisplayName("Delete Employee")
     public void givenEmployee_whenDeleted_thenReturnNull() {
 
         // Given -  A precondition (or) setup.
@@ -151,8 +152,8 @@ public class EmployeeRepositoryTests {
 
 
     @Test
-    @DisplayName("Find by JPQL - FirstName & LastName")
-    public void givenFirstNameAndLastName_whenFindByJPQL_thenReturnEmployeeObject() {
+    @DisplayName("Find Employee using JPQL with Index Params")
+    public void givenFirstNameAndLastName_whenFindByJPQLIndexParams_thenReturnEmployeeObject() {
 
         // Given -  A precondition (or) setup.
         Employee employee = Employee.builder()
@@ -163,7 +164,46 @@ public class EmployeeRepositoryTests {
         employeeRepository.save(employee);
 
         // When -  A behaviour or action that we are trying to perform.
-        Employee savedEmployee = employeeRepository.findByJPQL(employee.getFirstName(), employee.getLastName());
+        Employee savedEmployee = employeeRepository.findByJPQLIndexParams(employee.getFirstName(), employee.getLastName());
+
+        // Then - Verify the output of the operation performed.
+        assertThat(savedEmployee).isNotNull();
+    }
+
+
+    @Test
+    @DisplayName("Find Employee Using JPQL With Named Parameters")
+    public void givenFirstNameAndLastName_whenFindByJPQLNamedParams_thenReturnEmployeeObject() {
+
+        // Given -  A precondition (or) setup.
+        Employee employee = Employee.builder()
+                .firstName("Janvi")
+                .lastName("Bhardwaj")
+                .email("janvi.bhardwaj@gmail.com")
+                .build();
+        employeeRepository.save(employee);
+
+        // When -  A behaviour or action that we are trying to perform.
+        Employee savedEmployee = employeeRepository.findByJPQLNamedParams(employee.getFirstName(), employee.getLastName());
+
+        // Then - Verify the output of the operation performed.
+        assertThat(savedEmployee).isNotNull();
+    }
+
+    @Test
+    @DisplayName("Find Employee Using Native Query & Indexed Parameters")
+    public void givenFirstNameAndLastName_whenFindByNativeQuery_thenReturnEmployeeObject() {
+
+        // Given -  A precondition (or) setup.
+        Employee employee = Employee.builder()
+                .firstName("Janvi")
+                .lastName("Bhardwaj")
+                .email("janvi.bhardwaj@gmail.com")
+                .build();
+        employeeRepository.save(employee);
+
+        // When -  A behaviour or action that we are trying to perform.
+        Employee savedEmployee = employeeRepository.findByNativeQueryIndexParams(employee.getFirstName(), employee.getLastName());
 
         // Then - Verify the output of the operation performed.
         assertThat(savedEmployee).isNotNull();
