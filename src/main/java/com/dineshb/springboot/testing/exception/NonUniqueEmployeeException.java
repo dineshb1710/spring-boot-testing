@@ -7,6 +7,6 @@ public class NonUniqueEmployeeException extends RuntimeException {
     }
 
     public NonUniqueEmployeeException(String message, Throwable t) {
-        super(message);
+        super(message, t);
     }
 }
